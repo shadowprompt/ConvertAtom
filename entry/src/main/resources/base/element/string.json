@@ -1,0 +1,56 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "模块描述"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "label"
+    },
+    {
+      "name": "title",
+      "value": "运动健康转换工具"
+    },
+    {
+      "name": "description",
+      "value": "一款支持将华为、Zepp、小米、Keep、咕咚、悦跑圈、RQrun等平台导出的运动记录转换fit、tcx和gpx文件导入高驰、佳明、RQrun、Strava等主流运动平台的工具，一款支持gpx、fit、tcx格式互转的工具。"
+    },
+    {
+      "name": "app_preface",
+      "value": "前言"
+    },
+    {
+      "name": "app_preface_text",
+      "value": "你是否因更换运动手表品牌，苦苦寻找一个能将自己之前平台（华为、小米等）的运动记录导入到新平台（高驰、佳明等）的工具，在网上看了太多几乎无用的文章，终究未能如愿，来到这里即是终点，这里有你需要的运动健康转换工具！\n\n只要稍微主流一点的运动平台，但凡支持数据导入，必然会选择fit或者tcx格式，因为这才是业内的标准格式。\n\n为了帮助到更多跑友，本工具旨在为各位跑友转换运动记录数据，会不断努力扩充支持范围，让更多的非主流数据原格式能经过转换成主流格式，打破数据格式鸿沟。\n\n每一次运动锻炼了我们的身体，都是我们努力的痕迹，值得留存在我们的记录里。不负每一滴汗水，尊重每一次付出！"
+    },
+    {
+      "name": "convert_step_1_text",
+      "value": "1. 根据数据源准备指定格式的压缩包"
+    },
+    {
+      "name": "router_title_shopping",
+      "value": "商城案例"
+    },
+    {
+      "name": "router_title_music",
+      "value": "深色背景下状态栏颜色适配"
+    },
+    {
+      "name": "router_title_video",
+      "value": "隐藏状态烂和导航条"
+    },
+    {
+      "name": "router_title_shopping_fullscreen",
+      "value": "避让状态烂和导航条"
+    },
+    {
+      "name": "router_title_game",
+      "value": "避让挖孔和刘海"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "devices": "development",
+  "deviceTypes": [
+    "phone",
+    "tablet"
+  ],
+  "development": {
+    "addedSysCaps": [
+      "SystemCapability.Location.Location.Lite",
+      "SystemCapability.FileManagement.UserFileService"
+    ]
+  }
+}
