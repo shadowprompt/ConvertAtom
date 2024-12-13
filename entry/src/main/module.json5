@@ -8,6 +8,17 @@
       "phone",
       "tablet"
     ],
+    "requestPermissions": [{
+      "name" : "ohos.permission.INTERNET",
+      "reason": "$string:title",
+      "usedScene": {
+        "abilities": [
+          "EntryAbility"
+        ],
+        "when":"inuse"
+      }
+    }
+    ],
     "deliveryWithInstall": true,
     "installationFree": true,
     "pages": "$profile:main_pages",

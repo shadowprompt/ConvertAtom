@@ -1,5 +1,4 @@
 {
-  "devices": "development",
   "deviceTypes": [
     "phone",
     "tablet"
@@ -7,7 +6,8 @@
   "development": {
     "addedSysCaps": [
       "SystemCapability.Location.Location.Lite",
-      "SystemCapability.FileManagement.UserFileService"
+      "SystemCapability.FileManagement.UserFileService",
+      "SystemCapability.Request.FileTransferAgent"
     ]
   }
 }
