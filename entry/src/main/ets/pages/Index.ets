@@ -15,8 +15,10 @@
 
 import { Introduce } from '../views/introduce';
 import { Convert } from '../views/convert';
-import { Route, ROUTES } from '../constants/Constants';
-import { genTabBars, TabBarItemType } from '../utils/index'
+import { Discovery } from '../views/discovery';
+import { More } from '../views/more';
+import { COLOR_ACTIVE, COLOR_BLUR, TAB_BARS } from '../constants/Constants';
+import { TabBarItemType } from '../utils/interface'
 
 @Entry
 @Component
@@ -49,11 +51,14 @@ struct Index {
   @Builder
   TabBarBuilder(tabBar: TabBarItemType, index: number) {
     Column() {
+      Image(this.isActive(index) ? tabBar.iconActive : tabBar.icon)
+        .width(24)
+        .height(24)
+        .margin({ bottom: 0 })
       Text(tabBar.text)
         .fontSize(10)
-        .fontWeight(500)
-        .fontColor(this.isActive(index) ? '#D0092D' : Color.Black)
-        .opacity(this.isActive(index) ? 1 : 0.4)
+        .fontWeight(600)
+        .fontColor(this.isActive(index) ? COLOR_ACTIVE : COLOR_BLUR)
     }
   }
 
@@ -70,13 +75,24 @@ struct Index {
 
         Tabs({ barPosition: BarPosition.End }) {
           // DocsDot
-          ForEach(genTabBars(), (tabBar: TabBarItemType, index) => {
+          ForEach(TAB_BARS, (tabBar: TabBarItemType, index: number) => {
             TabContent() {
-              if (index === 0) {
-                Introduce()
-              } else if (index === 1) {
-                Convert()
+              Column() {
+                if (tabBar.type === 'index') {
+                  Introduce()
+                } else if (tabBar.type === 'convert') {
+                  Convert()
+                } else if (tabBar.type === 'discovery'){
+                  Discovery()
+                } else if (tabBar.type === 'more'){
+                  More()
+                }
               }
+              .margin({
+               bottom: 16
+              })
+              .width('100%')
+              .height('100%')
             }
             .margin({
               top: 16,

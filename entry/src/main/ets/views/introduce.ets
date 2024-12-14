@@ -1,3 +1,6 @@
+import { PREVIEW_TYPES } from "../constants/Constants"
+import { PreviewItemType } from "../utils/interface"
+
 @Component
 export struct Introduce {
   build() {
@@ -24,8 +27,11 @@ export struct Introduce {
         Row() {
           Text($r('app.string.app_preface'))
             .fontSize(20)
-            .fontWeight(500)
+            .fontWeight(600)
         }
+        .margin({
+          top: 16
+        })
         .width('100%')
         .justifyContent(FlexAlign.Start)
 
@@ -33,11 +39,42 @@ export struct Introduce {
           Text($r('app.string.app_preface_text'))
             .fontSize(16)
             .textIndent(32)
+            .lineHeight(24)
         }
+        .margin(
+          {
+            top: 8,
+            bottom: 8,
+          }
+        )
         .width('100%')
         .justifyContent(FlexAlign.Start)
+
+        Row() {
+          Text('转换效果预览')
+            .width('100%')
+            .fontWeight(600)
+        }.margin({
+          top: 16
+        })
+
+        ForEach(PREVIEW_TYPES, (previewItem: PreviewItemType) => {
+          Row() {
+            Text(previewItem.text + '导入高驰效果')
+          }
+          .margin({
+            top: 8,
+          })
+
+          Row() {
+            Image(previewItem.url)
+              .width('100%')
+          }
+          .margin({
+            top: 8,
+          })
+        })
       }
     }
-    // .backgroundColor('#ffffff')
   }
 }

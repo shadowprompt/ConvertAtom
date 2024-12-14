@@ -1,13 +1,7 @@
-import { ConvertItemType, ConvertSelected, genConvertTypes } from "../utils"
-import { common } from '@kit.AbilityKit';
+import { ConvertItemType, ConvertSelected } from "../utils/interface"
+import { CONVERT_TYPES, URL_CONVERT_TYPES } from "../../ets/constants/Constants"
 import { BusinessError } from '@kit.BasicServicesKit';
-import { picker } from "@kit.CoreFileKit"
 import http from '@ohos.net.http';
-import fs from '@ohos.file.fs';
-import { uri } from "@kit.ArkTS";
-import request from '@ohos.request';
-
-const HEADER: Record<string, string> = { 'Content-Type': 'multipart/form-data' };
 
 class MyRadioStyle implements ContentModifier<RadioConfiguration> {
   type: string
@@ -31,11 +25,10 @@ class MyRadioStyle implements ContentModifier<RadioConfiguration> {
 function buildRadio(config: RadioConfiguration) {
   Row() {
     Flex({ justifyContent: FlexAlign.Start, alignItems: ItemAlign.Center }) {
-      Text((config.contentModifier as MyRadioStyle).text)
       Radio({ value: 'Radio1', group: 'radioGroup',
         indicatorType:RadioIndicatorType.TICK
-      }).checked(false)
-        .height(30)
+      }).checked((config.contentModifier as MyRadioStyle).type === 'huawei' ? true : false)
+        .height(24)
         .width(20)
         .onChange((isChecked: boolean) => {
           if (isChecked) {
@@ -43,27 +36,53 @@ function buildRadio(config: RadioConfiguration) {
             myRadioStyle.callback(myRadioStyle.type)
           }
         })
+      Text((config.contentModifier as MyRadioStyle).text)
     }
   }
 }
 
 @Component
 export struct Convert {
-  @State type: string = ''
+  @State type: string = 'huawei'
+  @State url: string = ''
+  @State address: string = ''
+  addressController: TextInputController = new TextInputController()
 
-  // 传入应用才会触发UI渲染
+  // 传入对象才会触发UI渲染
   @Builder
   typeIntroduceRender(convertSelected: ConvertSelected) {
-    if (convertSelected.type === 'huawei') {
+    if (URL_CONVERT_TYPES.includes(convertSelected.type)) {
       Row() {
-        Text('将华为官网导出数据解压（可能需要密码）至文件夹\n' +
-          '\n' +
-          '将该文件夹中的以下文件\n' +
-          '\n' +
-          'Motion path detail data & description/motion path detail data.json\n' +
-          '\n' +
-          '放至一个文件夹内，打包成zip压缩包上传')
+        Text('待上传压缩包说明')
+          .fontSize(16)
+          .width('100%')
+          .lineHeight(24)
+          .fontColor('#666666')
       }
+      .margin({
+        top: 16
+      })
+    }
+
+    if (convertSelected.type === 'huawei') {
+      Column({space: 8}) {
+        Row() {
+          Text('将官网导出数据解压（可能需要密码）后将以下文件')
+        }.width('100%')
+        Row() {
+          Text('Motion path detail data & description/motion path detail data.json').fontWeight(800)
+        }.width('100%')
+        Row() {
+          Text('放至一个文件夹内，打包成zip格式压缩包')
+        }.width('100%')
+      }
+      .margin(
+        {
+          top: 8,
+          bottom: 8,
+        }
+      )
+
       Row() {
         Image('https://wp-img.daozhao.com/fitconverter/zip-intro-huawei.png')
           .width('100%')
@@ -72,8 +91,112 @@ export struct Convert {
       Text(convertSelected.type)
     }
   }
+  // 传入对象才会触发UI渲染
+  @Builder
+  typeConvertRender(convertSelected: ConvertSelected) {
+    if (URL_CONVERT_TYPES.includes(convertSelected.type)) {
+      Row() {
+        Text('2.填写压缩包url')
+          .fontSize(16)
+          .width('100%')
+          .lineHeight(24)
+          .fontWeight(600)
+      }
+      .margin({
+        top: 16
+      })
+
+      Row() {
+        TextInput({
+          text: this.url,
+          placeholder: '粘贴运动健康转换工具官网生成的url',
+        }).onChange((value) => {
+          this.url = value;
+        }).placeholderColor(Color.Grey)
+      }
+      .margin(
+        {
+          top: 8,
+          bottom: 8,
+        }
+      )
+      Column({space: 4}) {
+        Text('目前本应用还不支持上传文件（努力研究中），请移步至官网上传zip压缩包生成url').fontSize(14)
+        Image('https://wp-img.daozhao.com/fitconverter/20241214113002.png')
+      }
+    } else {
+      Row() {
+        Text('2.说明')
+          .fontSize(16)
+          .width('100%')
+          .lineHeight(24)
+          .fontWeight(600)
+      }
+      .margin({
+        top: 16
+      })
+
+      Row() {
+        Text('模拟登录相比官方导出数据拥有更多数据细节，转换效果更好！')
+          .width('100%')
+      }
+      .margin(
+        {
+          top: 8,
+          bottom: 8,
+        }
+      )
+      Row() {
+        Text('本应用暂不支持此类转换，请移步至运动健康转换工具官网（https://www.fitconverter.com）申请转换')
+          .width('100%')
+      }
+      .margin(
+        {
+          top: 8,
+          bottom: 8,
+        }
+      )
+    }
+
+    if (URL_CONVERT_TYPES.includes(convertSelected.type)) {
+      Row() {
+        Text('3.邮箱地址')
+          .width('100%')
+          .fontWeight(600)
+      }
+      .margin({
+        top: 16
+      })
+
+      Row() {
+        Column(){
+          TextInput({
+            text: this.address,
+            placeholder: '转换结果将以邮件形式通知',
+            // controller: this.addressController
+          }).onChange((value) => {
+            this.address = value;
+          }).placeholderColor(Color.Grey)
+        }
+      }
+      .margin(
+        {
+          top: 8,
+          bottom: 8,
+        }
+      )
+
+      Row() {
+        Button('开始转换').onClick(() => {
+          this.uploadRequest();
+        })
+      }.margin({
+        top: 16
+      })
+    }
+  }
   // 上传url
-  uploadRequest() {
+  uploadRequest = () => {
     const httpRequest = http.createHttp();
 
     httpRequest.request(
@@ -91,83 +214,29 @@ export struct Convert {
         },
         expectDataType: http.HttpDataType.OBJECT, // 可选，指定返回数据的类型
       }, (err: BusinessError, data: http.HttpResponse) => {
-      if (!err) {
-        // data.result为HTTP响应内容，可根据业务需要进行解析
-        console.info('Result:' + JSON.stringify(data.result));
-        console.info('code:' + JSON.stringify(data.responseCode));
-        // data.header为HTTP响应头，可根据业务需要进行解析
-        console.info('header:' + JSON.stringify(data.header));
-        console.info('cookies:' + JSON.stringify(data.cookies)); // 8+
-        // 当该请求使用完毕时，调用destroy方法主动销毁
-        httpRequest.destroy();
-      } else {
-        console.error('error:' + JSON.stringify(err));
-        // 取消订阅HTTP响应头事件
-        httpRequest.off('headersReceive');
-        // 当该请求使用完毕时，调用destroy方法主动销毁
-        httpRequest.destroy();
+        if (!err) {
+          // data.result为HTTP响应内容，可根据业务需要进行解析
+          console.info('Result:' + JSON.stringify(data.result));
+          console.info('code:' + JSON.stringify(data.responseCode));
+          // data.header为HTTP响应头，可根据业务需要进行解析
+          console.info('header:' + JSON.stringify(data.header));
+          console.info('cookies:' + JSON.stringify(data.cookies)); // 8+
+          // 当该请求使用完毕时，调用destroy方法主动销毁
+          httpRequest.destroy();
+        } else {
+          console.error('error:' + JSON.stringify(err));
+          // 取消订阅HTTP响应头事件
+          httpRequest.off('headersReceive');
+          // 当该请求使用完毕时，调用destroy方法主动销毁
+          httpRequest.destroy();
+        }
       }
-    }
     );
   }
-  // 上传文件 此路不通。。。
-  uploadFile(dataUri: string) {
-    const context = globalThis.getContext() as common.UIAbilityContext
-    let cacheDir = context.cacheDir;
 
-    // let file = fs.openSync(dataUri, fs.OpenMode.CREATE);
-
-    const newDataUri = cacheDir + '/test.txt'
-    let file = fs.openSync(newDataUri, fs.OpenMode.READ_WRITE | fs.OpenMode.CREATE);
-    fs.writeSync(file.fd, 'upload file test by API9');
-    fs.closeSync(file);
-    // 复制文件到缓存目录下
-    // fs.copyFileSync(file.fd, newDataUri);
-    const result =  new uri.URI(newDataUri);
-
-
-
-
-    console.info('path', result.path)
-    let attachments: Array<request.agent.FormItem> = [{
-      name: "test",
-      value: [
-        {
-          filename: "test.txt",
-          mimeType: 'application/octet-stream',
-          path: result.path,
-        },
-      ]
-    }];
-
-    let config: request.agent.Config = {
-      // headers: HEADER,
-      action: request.agent.Action.UPLOAD,
-      url: 'http://127.0.0.1:7788',
-      // mode: request.agent.Mode.FOREGROUND,
-      // overwrite: true,
-      // method: "POST",
-      data: attachments,
-      // saveas: "./"
-    };
-
-    request.agent.create(context, config).then((task: request.agent.Task) => {
-      task.start((err: BusinessError) => {
-        if (err) {
-          console.error(`Failed to start the upload task, Code: ${err.code}  message: ${err.message}`);
-          return;
-        }
-      });
-      task.on('progress', async(progress) => {
-        console.warn(`/Request upload status ${progress.state}, uploaded ${progress.processed}`);
-      })
-      task.on('completed', async() => {
-        console.warn(`/Request upload completed`);
-      })
-    }).catch((err: BusinessError) => {
-      console.error(`Failed to create a upload task, Code: ${err.code}, message: ${err.message}`);
-    });
-
+  onTypeChange = (type: string) => {
+    this.type = type
+    console.log('selected type is', this.type)
   }
 
   build() {
@@ -184,54 +253,26 @@ export struct Convert {
         })
         .padding(8)
 
-        Flex({direction: FlexDirection.Column}) {
-          ForEach(genConvertTypes(), (convertItem: ConvertItemType, index: number) => {
-            Radio({ value: convertItem.type, group: 'radioGroup' })
-              .contentModifier(new MyRadioStyle(convertItem.type, convertItem.text, (type: string) => {
-                this.type = type
-                console.log('selected type is', this.type)
-              }, '#004AAF'))
-              .checked(false)
+        Flex({
+          wrap: FlexWrap.Wrap
+        }){
+          ForEach(CONVERT_TYPES, (convertItem: ConvertItemType) => {
+            Row() {
+              Radio({ value: convertItem.type, group: 'radioGroup' })
+                .contentModifier(new MyRadioStyle(convertItem.type, convertItem.text,this.onTypeChange, '#004AAF'))
+                .checked(false)
+            }.width(convertItem.width)
           })
         }
-
-        Row() {
-          Text('待上传压缩包说明')
-            .fontSize(16)
-            .width('100%')
-            .lineHeight(24)
-
-        }
-        .margin({
-          top: 16
-        })
-        .padding(8)
 
         this.typeIntroduceRender({
           type: this.type
         })
 
-
-        Row() {
-          Button('上传文件').onClick(() => {
-            let documentPicker = new picker.DocumentViewPicker();
-            let documentSelectOptions = new picker.DocumentSelectOptions();
-
-            this.uploadRequest();
-
-            // this.uploadFile('abc')
-
-            // documentPicker.select(documentSelectOptions).then((documentSelectResult: Array<string>) => {
-            //   console.info('DocumentViewPicker.select successfully, documentSelectResult uri: ' + JSON.stringify(documentSelectResult));
-            //   this.uploadFile(documentSelectResult[0])
-            // }).catch((err: BusinessError) => {
-            //   console.error('DocumentViewPicker.select failed with err: ' + JSON.stringify(err));
-            // });
-          })
-        }
-
+        this.typeConvertRender({
+          type: this.type
+        })
       }
     }
-    // .backgroundColor('#ff0000')
   }
 }

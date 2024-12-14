@@ -9,10 +9,6 @@
       "value": "description"
     },
     {
-      "name": "EntryAbility_label",
-      "value": "label"
-    },
-    {
       "name": "title",
       "value": "运动健康转换工具"
     },
@@ -31,26 +27,6 @@
     {
       "name": "convert_step_1_text",
       "value": "1. 根据数据源准备指定格式的压缩包"
-    },
-    {
-      "name": "router_title_shopping",
-      "value": "商城案例"
-    },
-    {
-      "name": "router_title_music",
-      "value": "深色背景下状态栏颜色适配"
-    },
-    {
-      "name": "router_title_video",
-      "value": "隐藏状态烂和导航条"
-    },
-    {
-      "name": "router_title_shopping_fullscreen",
-      "value": "避让状态烂和导航条"
-    },
-    {
-      "name": "router_title_game",
-      "value": "避让挖孔和刘海"
     }
   ]
 }
