@@ -65,11 +65,14 @@ struct Index {
   build() {
     Navigation(this.navPageInfos) {
       Flex({ direction: FlexDirection.Column }) {
-        Text($r('app.string.title'))
-          .fontWeight(FontWeight.Bold)
-          .fontSize(24)
-          .fontColor('#E6000000')
-          .width('100%')
+        Row() {
+          Text($r('app.string.title'))
+            .fontWeight(FontWeight.Bold)
+            .fontSize(24)
+            .fontColor('#E6000000')
+            .width('100%')
+        }
+        .padding(16)
 
 
 
@@ -108,7 +111,6 @@ struct Index {
       }
       .width('100%')
       .height('100%')
-      .padding(16)
     }
     .hideToolBar(true)
     .hideTitleBar(true)

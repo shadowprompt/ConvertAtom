@@ -15,8 +15,15 @@ export interface ConvertItemType {
   type: string
   text: ResourceStr
   width?: string
+  isChecked?: boolean
+  fileList?: string[]
+  fileImgUrl?: string
 }
 
 export interface ConvertSelected {
   type: string
+}
+
+export interface RequestResult {
+  code: number
 }

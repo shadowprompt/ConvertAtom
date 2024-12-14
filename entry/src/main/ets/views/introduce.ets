@@ -52,15 +52,18 @@ export struct Introduce {
 
         Row() {
           Text('转换效果预览')
-            .width('100%')
             .fontWeight(600)
-        }.margin({
+          Text('（以导入高驰为例）').fontSize(12)
+        }
+        .width('100%')
+        .margin({
           top: 16
         })
+        .justifyContent(FlexAlign.Start)
 
         ForEach(PREVIEW_TYPES, (previewItem: PreviewItemType) => {
           Row() {
-            Text(previewItem.text + '导入高驰效果')
+            Text(previewItem.text)
           }
           .margin({
             top: 8,
@@ -76,5 +79,6 @@ export struct Introduce {
         })
       }
     }
+    .padding(16)
   }
 }

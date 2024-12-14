@@ -6,6 +6,7 @@
   "development": {
     "addedSysCaps": [
       "SystemCapability.Location.Location.Lite",
+      "SystemCapability.ArkUI.ArkUI.Full",
       "SystemCapability.FileManagement.UserFileService",
       "SystemCapability.Request.FileTransferAgent"
     ]

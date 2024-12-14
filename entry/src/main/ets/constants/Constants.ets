@@ -60,18 +60,26 @@ export const CONVERT_TYPES: ConvertItemType[] = [{
   type: 'huawei',
   text: '华为运动健康',
   width: '50%',
+  fileList: ['Motion path detail data & description/motion path detail data.json'],
+  fileImgUrl: 'https://wp-img.daozhao.com/fitconverter/zip-intro-huawei.png',
 }, {
   type: 'zepp',
   text: 'Zepp Life（原小米运动）',
   width: '100%',
+  fileList: ['ACTIVITY_MINUTE/ACTIVITY_MINUTE_xxx.csv', 'HEARTRATE_AUTO/HEARTRATE_AUTO_xxx.csv', 'SPORT/SPOR_xxx.csv'],
+  fileImgUrl: 'https://wp-img.daozhao.com/fitconverter/zip-intro-zepp.png',
 }, {
   type: 'xiaomi',
   text: '小米运动健康（原小米穿戴）',
   width: '100%',
+  fileList: ['XXX_MiFitness_hlth_center_fitness_data.csv', 'XXX_MiFitness_hlth_center_sport_record.csv'],
+  fileImgUrl: 'https://wp-img.daozhao.com/fitconverter/zip-intro-xiaomi.png',
 }, {
   type: 'keep',
   text: 'Keep',
   width: '30%',
+  fileList: ['XXX.xlsx'],
+  fileImgUrl: 'https://wp-img.daozhao.com/fitconverter/zip-intro-keep.png',
 }, {
   type: 'gpx',
   text: 'gpx文件',
@@ -100,6 +108,57 @@ export const CONVERT_TYPES: ConvertItemType[] = [{
   type: 'joyrun',
   text: '悦跑圈（模拟登录）',
   width: '80%',
+}]
+
+
+export const CONVERT_DESTINATIONS: ConvertItemType[] = [{
+  type: 'coros',
+  text: '高驰',
+  width: '30%',
+}, {
+  type: 'garmin',
+  text: '佳明',
+  width: '30%',
+}, {
+  type: 'huawei',
+  text: '华为',
+  width: '30%',
+}, {
+  type: 'strava',
+  text: 'Strava',
+  width: '30%',
+}, {
+  type: 'rqrun',
+  text: 'QRrun',
+  width: '30%',
+}, {
+  type: 'keep',
+  text: 'Keep',
+  width: '30%',
+}, {
+  type: 'shuzixindong',
+  text: '数字心动',
+  width: '50%',
+}, {
+  type: 'xingzhe',
+  text: '行者',
+  width: '30%',
+}, {
+  type: 'ipgsport',
+  text: 'iGPSPORT迹驰',
+  width: '50%',
+}, {
+  type: 'onelap',
+  text: '顽鹿运动',
+  width: '50%',
+}, {
+  type: 'fit',
+  text: 'FIT文件',
+  width: '50%',
+}, {
+  type: 'tcx',
+  text: 'TCX文件',
+  width: '50%',
 }]
 
 export const URL_CONVERT_TYPES: string[] = ['huawei', 'zepp', 'xiaomi', 'keep']
