@@ -6,19 +6,32 @@
         "type": "HarmonyOS",
         "material": {
           "certpath": "/Users/shadow/.ohos/config/default_ConvertAtom_vgxfk7ksrfRVlCizCtofbGvyxEztBbf0ISUOvlBTGWc=.cer",
-          "storePassword": "00000019C200F54EDA61F7154FF761868162C7367F1CC1ABF5EDDCE9CB2B863988E10D8D265209BFDF",
+          "storePassword": "0000001BFA792F428BCCF316BD50E831B650EBCD24DCA0DA53C8B08384AF16E82789507F06BFB29C85913E",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001986A3DFFF7D9DCC344705E10AB5B717CD5C4C42D4E72D8D5EFCDA2F12B2A34A62DF167DDFE3",
+          "keyPassword": "0000001BDF6CFC2240A6A58566258D9771968FAF3DDEBC3E64614444F86FAA5A7F3D6622B092AE7A0E438C",
           "profile": "/Users/shadow/.ohos/config/default_ConvertAtom_vgxfk7ksrfRVlCizCtofbGvyxEztBbf0ISUOvlBTGWc=.p7b",
           "signAlg": "SHA256withECDSA",
           "storeFile": "/Users/shadow/.ohos/config/default_ConvertAtom_vgxfk7ksrfRVlCizCtofbGvyxEztBbf0ISUOvlBTGWc=.p12"
+        }
+      },
+      {
+        "name": "release",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "/Users/shadow/.ohos/config/release_ConvertAtom_vgxfk7ksrfRVlCizCtofbGvyxEztBbf0ISUOvlBTGWc=.cer",
+          "storePassword": "0000001B69592EBE2C4FDA7B73C248DEAE9678AB739C89BC20CECEFBCD7577824A56BE553F36DAA3978449",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B4BAA2FFCCF8E346914DF13512BC87D68116330BC41A5F5F64585FC224BB8F441F5A933801B97D4",
+          "profile": "/Users/shadow/.ohos/config/release_ConvertAtom_vgxfk7ksrfRVlCizCtofbGvyxEztBbf0ISUOvlBTGWc=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "/Users/shadow/.ohos/config/release_ConvertAtom_vgxfk7ksrfRVlCizCtofbGvyxEztBbf0ISUOvlBTGWc=.p12"
         }
       }
     ],
     "products": [
       {
         "name": "default",
-        "signingConfig": "default",
+        "signingConfig": "release",
         "compatibleSdkVersion": "5.0.0(12)",
         "runtimeOS": "HarmonyOS",
       }
