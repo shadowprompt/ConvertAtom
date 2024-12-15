@@ -1,8 +1,15 @@
 import { ConvertItemType, ConvertSelected, RequestResult } from "../utils/interface"
 import { CONVERT_DESTINATIONS, CONVERT_TYPES, URL_CONVERT_TYPES } from "../../ets/constants/Constants"
 import { BusinessError } from '@kit.BasicServicesKit';
-import { promptAction } from '@kit.ArkUI'
+import { promptAction, UIContext } from '@kit.ArkUI'
+import { common } from '@kit.AbilityKit';
+import { preferences } from '@kit.ArkData';
+import { UIAbility } from '@kit.AbilityKit';
+import { window } from '@kit.ArkUI';
 import http from '@ohos.net.http';
+
+let preferencesOptions: preferences.Options = { name: 'myStore' };
+
 
 class MyRadioStyle implements ContentModifier<RadioConfiguration> {
   radioItem: ConvertItemType
@@ -50,6 +57,13 @@ export struct Convert {
   @State destination: string = 'coros'
   @State address: string = ''
   addressController: TextInputController = new TextInputController()
+
+  aboutToAppear() {
+    const dataPreferences = this.getDataPreferences();
+    if (dataPreferences) {
+      this.address =  dataPreferences.getSync('address', '').toString();
+    }
+  }
 
   // 选择指定类型的压缩包介绍
   @Builder
@@ -215,6 +229,23 @@ export struct Convert {
   resetInput() {
     this.url = ''
   }
+
+  getDataPreferences = () => {
+    const context = getContext(this) as common.UIAbilityContext;;
+    return preferences.getPreferencesSync(context, preferencesOptions);
+  }
+
+  saveData =  () => {
+    const dataPreferences = this.getDataPreferences();
+    if (dataPreferences) {
+      dataPreferences.putSync('address', this.address);
+    }
+  }
+
+  afterRequestSuccess = () => {
+    this.saveData();
+    this.resetInput();
+  }
   // 上传url
   uploadRequest = () => {
     const httpRequest = http.createHttp();
@@ -253,7 +284,7 @@ export struct Convert {
               message: '提交成功，转换结果随后将以邮件形式通知',
               duration: 2000
             });
-            this.resetInput();
+            this.afterRequestSuccess();
           } else {
             promptAction.showToast({
               message: '提交失败',
@@ -343,7 +374,9 @@ export struct Convert {
           }
 
           Row() {
-            Button('开始转换').onClick(() => {
+            Button('开始转换')
+              .enabled(this.url && this.address ? true: false)
+              .onClick(() => {
               this.uploadRequest();
             })
           }.margin({
