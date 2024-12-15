@@ -1,5 +1,6 @@
 import { PREVIEW_TYPES } from "../constants/Constants"
 import { PreviewItemType } from "../utils/interface"
+import { writeLog } from '../utils/index'
 
 @Component
 export struct Introduce {
@@ -22,7 +23,14 @@ export struct Introduce {
         Row() {
           Image('https://wp-img.daozhao.com/fitconverter/tool-intro.png')
             .width('100%')
-        }
+        }.onClick(() => {
+          writeLog({
+            type: 'image',
+            trigger: 'click',
+            key: 'tool_introduce',
+            value: 1
+          })
+        })
 
         Row() {
           Text($r('app.string.app_preface'))

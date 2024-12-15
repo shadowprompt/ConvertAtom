@@ -1,5 +1,4 @@
-import { PREVIEW_TYPES } from "../constants/Constants"
-import { PreviewItemType } from "../utils/interface"
+import { writeLog } from "../utils"
 
 @Component
 export struct Discovery {
@@ -48,6 +47,14 @@ export struct Discovery {
         Row() {
           Image('https://www.fitconverter.com/type-intro.png')
             .width('100%')
+            .onClick(() => {
+              writeLog({
+                type: 'image',
+                trigger: 'click',
+                key: 'result_type_introduce',
+                value: 1
+              })
+            })
         }
 
         Row(){

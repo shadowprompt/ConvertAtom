@@ -7,6 +7,7 @@ import { preferences } from '@kit.ArkData';
 import { UIAbility } from '@kit.AbilityKit';
 import { window } from '@kit.ArkUI';
 import http from '@ohos.net.http';
+import { writeLog } from "../utils";
 
 let preferencesOptions: preferences.Options = { name: 'myStore' };
 
@@ -44,6 +45,14 @@ function buildRadio(config: RadioConfiguration) {
             const myRadioStyle = config.contentModifier as MyRadioStyle
             myRadioStyle.callback(myRadioStyle.radioItem.type)
           }
+        })
+        .onClick(() => {
+          writeLog({
+            type: 'radio',
+            trigger: 'click',
+            key: 'radio_' + (config.contentModifier as MyRadioStyle).group,
+            value: (config.contentModifier as MyRadioStyle).radioItem.type
+          })
         })
       Text((config.contentModifier as MyRadioStyle).radioItem.text)
     }
@@ -84,6 +93,14 @@ export struct Convert {
           Row() {
             Image(convertItem.fileImgUrl)
               .width('100%')
+              .onClick(() => {
+                writeLog({
+                  type: 'image',
+                  trigger: 'click',
+                  key: 'type_introduce',
+                  value: convertItem.type
+                })
+              })
           }
         }
       }
@@ -136,13 +153,15 @@ export struct Convert {
       Row() {
         Text('2.填写压缩包url')
           .fontSize(16)
-          .width('100%')
           .lineHeight(24)
           .fontWeight(600)
+          Text('*').fontColor('#fe000')
       }
       .margin({
         top: 16
       })
+      .width('100%')
+      .justifyContent(FlexAlign.Start)
 
       Row() {
         TextInput({
@@ -158,6 +177,9 @@ export struct Convert {
           bottom: 8,
         }
       )
+      .width('100%')
+      .justifyContent(FlexAlign.Start)
+
       Column({space: 4}) {
         Text('目前本应用还不支持上传文件（努力研究中），请移步至官网上传zip压缩包生成url').fontSize(14)
         Image('https://wp-img.daozhao.com/fitconverter/20241214113002.png')
@@ -199,12 +221,14 @@ export struct Convert {
     if (URL_CONVERT_TYPES.includes(convertSelected.type)) {
       Row() {
         Text('3.邮箱地址')
-          .width('100%')
           .fontWeight(600)
+        Text('*').fontColor('#fe000')
       }
       .margin({
         top: 16
       })
+      .width('100%')
+      .justifyContent(FlexAlign.Start)
 
       Row() {
         Column(){
@@ -245,6 +269,25 @@ export struct Convert {
   afterRequestSuccess = () => {
     this.saveData();
     this.resetInput();
+  }
+
+  handleRequestClick = () => {
+    writeLog({
+      type: 'button',
+      trigger: 'click',
+      key: 'request',
+      value: `${this.type}_${this.address}_${this.url}`
+    })
+
+    if (!this.type.trim() || !this.address.trim() || !this.url.trim()) {
+      promptAction.showToast({
+        message: '请填写完整后再提交',
+        duration: 2000
+      });
+      return
+    }
+
+    this.uploadRequest();
   }
   // 上传url
   uploadRequest = () => {
@@ -323,13 +366,15 @@ export struct Convert {
         Row() {
           Text($r('app.string.convert_step_1_text'))
             .fontSize(16)
-            .width('100%')
             .lineHeight(24)
+          Text('*').fontColor('#fe000')
         }
         .margin({
           top: 16
         })
         .padding(8)
+        .width('100%')
+        .justifyContent(FlexAlign.Start)
 
         Flex({
           wrap: FlexWrap.Wrap
@@ -354,12 +399,14 @@ export struct Convert {
         if (URL_CONVERT_TYPES.includes(this.type)) {
           Row() {
             Text('4.导入平台')
-              .width('100%')
               .fontWeight(600)
+            Text('*').fontColor('#fe000')
           }
           .margin({
             top: 16
           })
+          .width('100%')
+          .justifyContent(FlexAlign.Start)
 
           Flex({
             wrap: FlexWrap.Wrap
@@ -377,7 +424,7 @@ export struct Convert {
             Button('开始转换')
               .enabled(this.url && this.address ? true: false)
               .onClick(() => {
-              this.uploadRequest();
+                this.handleRequestClick();
             })
           }.margin({
             top: 16

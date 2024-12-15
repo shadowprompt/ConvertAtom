@@ -27,3 +27,15 @@ export interface ConvertSelected {
 export interface RequestResult {
   code: number
 }
+
+export interface EventTriggerType {
+  type: string,
+  trigger: string,
+  key: string
+  value: string | number | boolean
+}
+
+export interface EventPayloadType {
+  key: string
+  value: string | number | boolean
+}

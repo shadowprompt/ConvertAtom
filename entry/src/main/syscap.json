@@ -9,7 +9,8 @@
       "SystemCapability.ArkUI.ArkUI.Full",
       "SystemCapability.DistributedDataManager.Preferences.Core",
       "SystemCapability.FileManagement.UserFileService",
-      "SystemCapability.Request.FileTransferAgent"
+      "SystemCapability.Request.FileTransferAgent",
+      "SystemCapability.HiviewDFX.HiAppEvent"
     ]
   }
 }
