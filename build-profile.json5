@@ -6,32 +6,32 @@
         "type": "HarmonyOS",
         "material": {
           "certpath": "/Users/shadow/.ohos/config/default_ConvertAtom_vgxfk7ksrfRVlCizCtofbGvyxEztBbf0ISUOvlBTGWc=.cer",
-          "storePassword": "0000001BFA792F428BCCF316BD50E831B650EBCD24DCA0DA53C8B08384AF16E82789507F06BFB29C85913E",
+          "storePassword": "0000001B91D906395C7340598B9E349ADB7AAAF2FE6E5192BAEE9E1CCC9E48487AD50BEA9E0FA7E092A716",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001BDF6CFC2240A6A58566258D9771968FAF3DDEBC3E64614444F86FAA5A7F3D6622B092AE7A0E438C",
+          "keyPassword": "0000001B9E905CE9FAE6D4701F0FF670533B5E7DF77F210F567438F966477AF4778414CA4061059BCD22F7",
           "profile": "/Users/shadow/.ohos/config/default_ConvertAtom_vgxfk7ksrfRVlCizCtofbGvyxEztBbf0ISUOvlBTGWc=.p7b",
           "signAlg": "SHA256withECDSA",
           "storeFile": "/Users/shadow/.ohos/config/default_ConvertAtom_vgxfk7ksrfRVlCizCtofbGvyxEztBbf0ISUOvlBTGWc=.p12"
         }
       },
-      {
-        "name": "release",
-        "type": "HarmonyOS",
-        "material": {
-          "certpath": "/Users/shadow/.ohos/config/release_ConvertAtom_vgxfk7ksrfRVlCizCtofbGvyxEztBbf0ISUOvlBTGWc=.cer",
-          "storePassword": "0000001B69592EBE2C4FDA7B73C248DEAE9678AB739C89BC20CECEFBCD7577824A56BE553F36DAA3978449",
-          "keyAlias": "debugKey",
-          "keyPassword": "0000001B4BAA2FFCCF8E346914DF13512BC87D68116330BC41A5F5F64585FC224BB8F441F5A933801B97D4",
-          "profile": "/Users/shadow/.ohos/config/release_ConvertAtom_vgxfk7ksrfRVlCizCtofbGvyxEztBbf0ISUOvlBTGWc=.p7b",
-          "signAlg": "SHA256withECDSA",
-          "storeFile": "/Users/shadow/.ohos/config/release_ConvertAtom_vgxfk7ksrfRVlCizCtofbGvyxEztBbf0ISUOvlBTGWc=.p12"
-        }
-      }
+            {
+              "name": "release",
+              "type": "HarmonyOS",
+              "material": {
+                "storePassword": "00000019D48A3A321C36F70D78CA1023FCD3E934E1E61BC3688B5A15AC0145FF95451154467F0F236F",
+                "certpath": "/Users/shadow/DevEcoStudioProjects/cert/release.cer",
+                "keyAlias": "cc",
+                "keyPassword": "00000019F431FE58035B37C082B7701ED0CCE01CC93DA52C6BA4983B40745DCEBD463E1BDC2CDD4496",
+                "profile": "/Users/shadow/DevEcoStudioProjects/cert/releaseRelease.p7b",
+                "signAlg": "SHA256withECDSA",
+                "storeFile": "/Users/shadow/DevEcoStudioProjects/cert/release.p12"
+              }
+            }
     ],
     "products": [
       {
         "name": "default",
-        "signingConfig": "release",
+        "signingConfig": "default", // set to release when release
         "compatibleSdkVersion": "5.0.0(12)",
         "runtimeOS": "HarmonyOS",
       }
