@@ -1,7 +1,19 @@
+import { ImageDialog } from "../components/ImageDialog"
 import { writeLog } from "../utils"
 
 @Component
 export struct Discovery {
+  @State activeImageUrl: string = ''
+  imageDialogController: CustomDialogController | null = new CustomDialogController({
+    builder: ImageDialog({
+      imageUrl: this.activeImageUrl,
+    }),
+  })
+
+  aboutToDisappear() {
+    this.imageDialogController = null
+  }
+
   build() {
     Scroll(){
       Column({space: 8}) {
@@ -48,6 +60,11 @@ export struct Discovery {
           Image('https://www.fitconverter.com/type-intro.png')
             .width('100%')
             .onClick(() => {
+              this.activeImageUrl = 'https://www.fitconverter.com/type-intro.png';
+              if (this.imageDialogController) {
+                this.imageDialogController.open();
+              }
+
               writeLog({
                 type: 'image',
                 trigger: 'click',

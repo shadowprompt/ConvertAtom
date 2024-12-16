@@ -5,7 +5,7 @@ import { promptAction, UIContext } from '@kit.ArkUI'
 import { common } from '@kit.AbilityKit';
 import { preferences } from '@kit.ArkData';
 import { UIAbility } from '@kit.AbilityKit';
-import { window } from '@kit.ArkUI';
+import { ImageDialog } from '../components/ImageDialog';
 import http from '@ohos.net.http';
 import { writeLog } from "../utils";
 
@@ -67,11 +67,19 @@ export struct Convert {
   @State address: string = ''
   addressController: TextInputController = new TextInputController()
 
+  @State activeImageUrl: string = ''
+  imageDialogController: CustomDialogController | null = new CustomDialogController({
+    builder: ImageDialog({
+      imageUrl: this.activeImageUrl,
+    }),
+  })
+
   aboutToAppear() {
     const dataPreferences = this.getDataPreferences();
     if (dataPreferences) {
       this.address =  dataPreferences.getSync('address', '').toString();
     }
+    this.imageDialogController = null;
   }
 
   // 选择指定类型的压缩包介绍
@@ -94,6 +102,13 @@ export struct Convert {
             Image(convertItem.fileImgUrl)
               .width('100%')
               .onClick(() => {
+                if (convertItem.fileImgUrl) {
+                  this.activeImageUrl = convertItem.fileImgUrl;
+                  if (this.imageDialogController) {
+                    this.imageDialogController.open();
+                  }
+                }
+
                 writeLog({
                   type: 'image',
                   trigger: 'click',
