@@ -4,6 +4,8 @@ import { writeLog } from '../utils/index'
 
 @Component
 export struct Introduce {
+  private swiperController: SwiperController = new SwiperController();
+
   build() {
     Scroll(){
       Column() {
@@ -69,22 +71,61 @@ export struct Introduce {
         })
         .justifyContent(FlexAlign.Start)
 
-        ForEach(PREVIEW_TYPES, (previewItem: PreviewItemType) => {
-          Row() {
-            Text(previewItem.text)
-          }
-          .margin({
-            top: 8,
-          })
+        Flex({justifyContent: FlexAlign.SpaceBetween}) {
+          Button('Prev')
+            .onClick(() => {
+              this.swiperController.showPrevious(); // 通过controller切换到前一页
+            })
+            .height(20)
+            .backgroundColor('#999999')
 
-          Row() {
-            Image(previewItem.url)
-              .width('100%')
-          }
-          .margin({
-            top: 8,
+          Button('Next')
+            .onClick(() => {
+              this.swiperController.showNext(); // 通过controller切换到后一页
+            })
+            .height(20)
+            .backgroundColor('#999999')
+
+        }.margin(5)
+        .width('100%')
+
+        Swiper(this.swiperController){
+          ForEach(PREVIEW_TYPES, (previewItem: PreviewItemType) => {
+            Column(){
+              Row() {
+                Text(previewItem.text)
+              }
+              .margin({
+                top: 8,
+              })
+
+              Row() {
+                Image(previewItem.url)
+                  .width('100%')
+              }
+              .margin({
+                top: 8,
+              })
+            }
           })
-        })
+        }
+        .displayArrow({
+          showBackground: true,
+          isSidebarMiddle: true,
+          backgroundSize: 24,
+          backgroundColor: Color.White,
+          arrowSize: 18,
+          arrowColor: Color.Blue
+        }, false)
+        .indicator(
+          Indicator.dot()
+            .itemWidth(10)
+            .itemHeight(10)
+            .selectedItemWidth(20)
+            .selectedItemHeight(10)
+            .color('#fdfdfd')
+            .selectedColor('#fe0000')
+        )
       }
     }
     .padding(16)
